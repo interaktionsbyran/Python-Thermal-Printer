@@ -23,6 +23,10 @@ host      = 'm2m.interaktionsbyran.se'
 topic     = 'amee/interaktionight/print'
 logo      = Image.open("gfx/interaktionight.png")
 
+def on_connect(client, userdata, flags, rc):
+  print("Connected with result code "+str(rc))
+  mqttc.subscribe(topic, 0)
+
 def on_message(mqttc, obj, msg):
   print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))
   payload = json.loads(msg.payload)
@@ -72,7 +76,8 @@ def on_message(mqttc, obj, msg):
 
 mqttc = mqtt.Client()
 mqttc.on_message = on_message
+mqttc.on_connect = on_connect
 mqttc.connect(host, 1883, 60)
-mqttc.subscribe(topic, 0)
+
 
 mqttc.loop_forever()
