@@ -175,8 +175,8 @@ class Adafruit_Thermal(Serial):
 
 	# Override write() method to keep track of paper feed.
 	def write(self, *data):
-		for i in range(len(data)):
-			c = data[i]
+		for c in data:
+			#c = data[i]
 			if c != 0x13:
 				self.timeoutWait()
 				super(Adafruit_Thermal, self).write(c)
@@ -568,6 +568,6 @@ class Adafruit_Thermal(Serial):
 	# For Arduino code compatibility again
 	def println(self, *args, **kwargs):
 		for arg in args:
-			self.write(str(arg))
+			self.write(arg)
 		self.write('\n')
 

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/python
 
 # Listens to topic amee/interaktionight/print on mqtt broker at
@@ -26,8 +27,6 @@ def on_message(mqttc, obj, msg):
   print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))
   payload = json.loads(msg.payload)
   
-  # TODO: print divider and NIB logo
-
   username = payload['username']
   printer.printImage(logo)
   printer.feed(2)
@@ -54,12 +53,12 @@ def on_message(mqttc, obj, msg):
   printer.setSize('S')
   printer.println("Greetings from")
   printer.setSize('L')
-  printer.println('@' + username)
+  printer.println('@' + str(username))
   printer.setSize('S')
    
   caption = payload['caption']
   printer.feed(1)
-  printer.println('"' + caption + '"')
+  printer.println('"' + caption.encode('cp437', 'ignore') + '"')
   printer.feed(1)
   printer.setSize('S')
   printer.boldOff()
