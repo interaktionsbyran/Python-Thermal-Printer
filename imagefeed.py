@@ -73,7 +73,8 @@ def report_presence():
 		'outputClass': OUTPUT_CLASS
 		},
 		sort_keys=False)
-		client.publish('output/presence/' + OUTPUT_NAME, payload=payload, qos=0, retain=True)
+
+	mqttc.publish('output/presence/' + OUTPUT_NAME, payload=payload, qos=0, retain=True)
 
 
 def on_message(mqttc, obj, msg):
